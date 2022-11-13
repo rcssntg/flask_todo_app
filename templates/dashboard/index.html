@@ -1,0 +1,92 @@
+{% extends 'partials/base.html' %} {% block title %} Home Page {% endblock %} {%
+block content %} <br />
+
+<!-- Statistics Lines Start Here -->
+<div class="container">
+  <div class="row g-5">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <h5 class="card-header text-uppercase">Statistics</h5>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h6 class="text-sm-center">Total</h6>
+                  <p class="text-center">{{total_todo}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h6 class="text-sm-center">Completed</h6>
+                  <p class="text-center">{{completed_todo}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h6 class="text-sm-center">Uncompleted</h6>
+                  <p class="text-center">{{uncompleted_todo}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Statistics Lines Ends Here -->
+
+    <!-- TODO Lines Starts Here -->
+    <div class="col-md-6">
+      <div class="card shadow ">
+        <h5 class="card-header ">To Do Form</h5>
+        <div class="card-body">
+          <form action="/add" method="POST">
+            <label class="card-title" for="">Title</label>
+            <input
+              class="form-control"
+              type="text"
+              name="title"
+              id=""
+              placeholder="Add to do task here"
+              required
+            />
+            <input
+              class="btn btn-primary mt-2 btn-sm"
+              type="submit"
+              value="Add"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TODO Lines Ends Here -->
+
+  <!-- TODO List Starts Here -->
+  {% if total_todo == 0 %}
+  <h2 class="mt-5 display-5 text-secondary text-center">
+    There is no to do list here.. Please add your to do!
+  </h2>
+  {% endif %} <br>
+
+  {% for todo in todo_list %}
+  
+  <div class="border-start border-5 mt-5 shadow">
+    <div class="card-body">
+      <h5>{{ todo.id}} | {{ todo.title}} </h5>
+      {% if todo.complete %}
+      <span class="badge bg-success">Completed</span>
+      {% else %}
+      <span class="badge bg-secondary">Uncompleted</span>
+      {% endif %}
+      <a class="btn btn-outline-primary btn-sm" href="/update/{{ todo.id }}">Update</a>
+      <a class="btn btn-outline-danger btn-sm" href="/delete/{{ todo.id }}">Delete</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
